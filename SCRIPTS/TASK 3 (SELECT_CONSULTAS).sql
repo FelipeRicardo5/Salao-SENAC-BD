@@ -93,7 +93,7 @@ FROM `salaosenac`.`tbl_servico` s
 JOIN `salaosenac`.`tbl_itensServicos` i ON s.idtbl_servico = i.tbl_servico_idtbl_servico
 WHERE i.valorTotal > 50;
 
--- ERRO
+-- SUBSTITUIR OU ALTERAR (!!!!)
 
 -- Listar os clientes com maior número de agendamentos realizados:
 SELECT c.nome, COUNT(a.idtbl_agendamento) AS total_agendamentos
