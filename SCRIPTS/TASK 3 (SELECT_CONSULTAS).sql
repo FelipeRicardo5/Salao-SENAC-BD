@@ -93,17 +93,17 @@ FROM `salaosenac`.`tbl_servico` s
 JOIN `salaosenac`.`tbl_itensServicos` i ON s.idtbl_servico = i.tbl_servico_idtbl_servico
 WHERE i.valorTotal > 50;
 
--- SUBSTITUIR OU ALTERAR (!!!!)
+-- VERIFICAR
 
--- Listar os clientes com maior número de agendamentos realizados:
-SELECT c.nome, COUNT(a.idtbl_agendamento) AS total_agendamentos
+- Listar os clientes com maior número de agendamentos realizados:
+SELECT idtbl_cadastroCliente, COUNT(a.idtbl_agendamento) AS total_agendamentos
 FROM `salaosenac`.`tbl_cadastroCliente` c
 JOIN `salaosenac`.`tbl_agendamento` a ON c.idtbl_cadastroCliente = a.tbl_cadastroCliente_idtbl_cadastroCliente
-GROUP BY c.nome
+GROUP BY idtbl_cadastroCliente
 ORDER BY total_agendamentos DESC;
 
 -- Exibir o valor total de vendas realizadas por cliente:
-SELECT c.nome, SUM(v.valor) AS total_vendas
+SELECT idtbl_cadastroCliente, SUM(v.valor) AS total_vendas
 FROM `salaosenac`.`tbl_venda` v
 JOIN `salaosenac`.`tbl_cadastroCliente` c ON v.tbl_cadastroCliente_idtbl_cadastroCliente = c.idtbl_cadastroCliente
-GROUP BY c.nome;
+GROUP BY idtbl_cadastroCliente;
