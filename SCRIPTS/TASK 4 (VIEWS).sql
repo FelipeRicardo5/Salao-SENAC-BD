@@ -24,6 +24,10 @@ p.nome 'Profissional Responsável', p.nomeSocial 'Nome Social', p.cpf 'CPF', p.e
 FROM tbl_profissional p
 JOIN tbl_dependente d ON p.cpf = d.tbl_profissional_cpf; 
 
-
+-- Telefone dos funcionários
+CREATE VIEW telefone_funcionarios AS
+SELECT f.nome 'Funcionário', t.numero 'Telefone'
+FROM tbl_funcionario f
+JOIN tbl_telefone t ON f.cpf = t.tbl_funcionario_cpf;
 
 
