@@ -56,6 +56,12 @@ JOIN `salaosenac`.`tbl_servico` s ON a.idtbl_agendamento = s.tbl_registroServico
 JOIN `salaosenac`.`tbl_profissional` p ON s.tbl_profissional_cpf = p.cpf
 GROUP BY p.nome, p.cpf;
 
+10 profissionais e suas ferias 
+
+CREATE VIEW vw_profissionais_ferias AS
+SELECT p.nome AS profissional_nome, f.dataInicio, f.dataFim
+FROM tbl_profissional p
+JOIN tbl_ferias f ON p.cpf = f.tbl_profissional_cpf;
 
 
 
