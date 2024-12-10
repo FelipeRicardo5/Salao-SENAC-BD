@@ -56,12 +56,22 @@ JOIN `salaosenac`.`tbl_servico` s ON a.idtbl_agendamento = s.tbl_registroServico
 JOIN `salaosenac`.`tbl_profissional` p ON s.tbl_profissional_cpf = p.cpf
 GROUP BY p.nome, p.cpf;
 
-10 profissionais e suas ferias 
+10 -- profissionais e suas ferias 
 
 CREATE VIEW vw_profissionais_ferias AS
 SELECT p.nome AS profissional_nome, f.dataInicio, f.dataFim
 FROM tbl_profissional p
 JOIN tbl_ferias f ON p.cpf = f.tbl_profissional_cpf;
+
+11-- Total de salários a pagar
+CREATE VIEW totalSalarioaPagar AS 
+SELECT 
+    (SELECT SUM(salario) FROM tbl_funcionario) +
+    (SELECT SUM(salario) FROM tbl_profissional) AS total_salario_a_pagar;
+
+SELECT sum(f.salario) + sum(p.salario) 
+FROM tbl_funcionario f join tbl_profissional p 
+ON f.cpf = p.cpf;
 
 
 
