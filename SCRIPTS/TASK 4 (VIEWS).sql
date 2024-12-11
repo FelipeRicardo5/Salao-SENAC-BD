@@ -84,3 +84,10 @@ SELECT
     formapag AS FormaPagamento
 FROM 
     salaosenac.tbl_registroServico;
+
+-- 13 Folha Salarial Profissional (Comissão, INSS, IRRF) (RODAR FUNÇÃO 1 e 2) 
+CREATE VIEW folhasalarial_profissional AS
+SELECT 
+	CONCAT('R$', FORMAT(salario, 2, 'de_DE')) 'Salário Bruto', CONCAT('+ ', 'R$ ', 
+	FORMAT(comissao, 2, 'de_DE'))  'Comissão', CONCAT('-','R$ ', FORMAT(INSS(salario), 2, 'de_DE')) 'INSS', CONCAT('-', 'R$ ', FORMAT(irrf(salario), 2, 'de_DE')) 'IRRF'
+FROM tbl_profissional;
