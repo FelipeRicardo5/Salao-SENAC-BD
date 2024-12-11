@@ -93,6 +93,22 @@ FROM `salaosenac`.`tbl_servico` s
 JOIN `salaosenac`.`tbl_itensServicos` i ON s.idtbl_servico = i.tbl_servico_idtbl_servico
 WHERE i.valorTotal > 50;
 
+-- fornecer informações sobre o registro, incluindo o funcionario que registrou
+SELECT 
+    r.formapag, 
+    COUNT(*) AS quantidade, 
+    f.nome AS nome_funcionario
+FROM 
+    salaosenac.tbl_registroServico r
+JOIN 
+    salaosenac.tbl_funcionario f
+ON 
+    r.tbl_funcionario_cpf = f.cpf
+GROUP BY 
+    r.formapag, f.nome
+ORDER BY 
+    quantidade DESC, f.nome;
+
 -- VERIFICAR
 
 - Listar os clientes com maior número de agendamentos realizados:
