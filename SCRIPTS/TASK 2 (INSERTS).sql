@@ -138,16 +138,19 @@ INSERT INTO salaosenac.tbl_registroServico (idtbl_registroServico, nomeCliente, 
 
 -- ALTER TABLE forma de pagamento com atributo em registro de serviço
 ALTER TABLE salaosenac.tbl_registroServico
-ADD COLUMN formapag VARCHAR(45) NOT NULL AFTER status;
- 
+ADD COLUMN formapag VARCHAR(45);
+
 UPDATE salaosenac.tbl_registroServico
 SET formapag = 'Cartão de Crédito'
 WHERE idtbl_registroServico IN (1, 3, 5, 8, 11, 13, 16, 19);
- 
+
 UPDATE salaosenac.tbl_registroServico
 SET formapag = 'Débito'
 WHERE idtbl_registroServico IN (2, 6, 9, 12, 14, 17, 20);
 
+UPDATE salaosenac.tbl_registroServico
+SET formapag = 'PIX'
+WHERE idtbl_registroServico IN (4, 7, 10, 15, 18, 20);
 
 INSERT INTO `salaosenac`.`tbl_telefone` (`idtbl_telefone`, `numero`, `tbl_funcionario_cpf`, `tbl_profissional_cpf`) VALUES
 (1, '1234567890', '12345678900', '12345678901'),
@@ -344,19 +347,3 @@ INSERT INTO `salaosenac`.`tbl_venda` (`valor`, `tbl_cadastroCliente_idtbl_cadast
 (135.00, 17, 17),
 (145.00, 18, 18),
 (195.00, 19, 19);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
