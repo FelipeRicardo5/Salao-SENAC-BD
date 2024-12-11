@@ -72,16 +72,15 @@ SELECT sum(f.salario) + sum(p.salario)
 FROM tbl_funcionario f join tbl_profissional p 
 ON f.cpf = p.cpf;
 
--- Resumo serviço
-CREATE VIEW resumo_servicos AS
-SELECT 
-    idtbl_registroServico AS ID,
-    nomeCliente AS Cliente,
-    valor AS Valor,
-    status AS StatusServico,
-    DATE_FORMAT(data, '%d/%m/%Y %H:%i:%s') AS DataAtendimento,
-    tbl_funcionario_cpf AS CPF_Responsavel,
-    formapag AS FormaPagamento
-FROM 
-    salaosenac.tbl_registroServico;
- Se vc poder dar commit la, por favor
+-- 12 Resumo serviço
+CREATE VIEW resumo_servicos AS 
+SELECT 
+    idtbl_registroServico AS ID,
+    nomeCliente AS Cliente,
+    valor AS Valor,
+    status AS StatusServico,
+    DATE_FORMAT(data, '%d/%m/%Y %H:%i:%s') AS DataAtendimento,
+    tbl_funcionario_cpf AS CPF_Responsavel,
+    formapag AS FormaPagamento
+FROM 
+    salaosenac.tbl_registroServico;
