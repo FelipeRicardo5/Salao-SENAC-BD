@@ -1,5 +1,5 @@
 -- FUNÇÕES E PROCEDURES
--- F1: Calculo do INSS
+-- 1: Calculo do INSS
 DELIMITER $$
 
 CREATE FUNCTION inss(salario DECIMAL(6,2))
@@ -20,7 +20,7 @@ END $$
 
 DELIMITER ;
 
--- F2: Calculo do IRRF
+-- 2: Calculo do IRRF
 DELIMITER $$
 
 CREATE FUNCTION irrf(salario DECIMAL(6,2))
@@ -40,3 +40,45 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+-- 3: Total gasto do cliente
+DELIMITER $$
+
+CREATE FUNCTION totalgasto(cliente_cpf VARCHAR(11))
+RETURNS DECIMAL(6,2) DETERMINISTIC
+BEGIN
+    DECLARE total DECIMAL(6,2) DEFAULT 0.0;
+    SELECT SUM(v.valor) INTO total
+    FROM tbl_venda v
+    JOIN tbl_agendamento a ON v.tbl_agendamento_idtbl_agendamento = a.idtbl_agendamento
+    JOIN tbl_cadastroCliente c ON a.tbl_cadastroCliente_idtbl_cadastroCliente = c.idtbl_cadastroCliente
+    WHERE c.tbl_cliente_cpf = cliente_cpf;
+    
+    RETURN total;
+END $$
+
+DELIMITER ;
+
+select * from tbl_cliente;
+select totalgasto('13579135791') from tbl_cliente;
+
+-- 4: Preço unitario do serviço
+DELIMITER $$
+
+CREATE FUNCTION precounitservico(tbl_servico_idtbl_servico INT)
+RETURNS DECIMAL(6,2) DETERMINISTIC
+BEGIN
+    DECLARE preco DECIMAL(6,2);
+    SELECT iv.precoUnitario
+    INTO preco
+    FROM tbl_itensservicos iv
+    JOIN tbl_servico s ON iv.tbl_servico_idtbl_servico = s.idtbl_servico
+    WHERE s.idtbl_servico = tbl_servico_idtbl_servico
+    LIMIT 1;
+    
+    RETURN preco;
+END $$
+
+DELIMITER ;
+
+select precounitservico(3) FROM tbl_itensservicos;
