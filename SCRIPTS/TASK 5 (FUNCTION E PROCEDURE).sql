@@ -82,3 +82,63 @@ END $$
 DELIMITER ;
 
 select precounitservico(3) FROM tbl_itensservicos;
+
+-- Nome dos clientes maiusculo
+select upper(nome) from tbl_cliente;
+
+-- Total de clientes
+SELECT count(nome) AS totalcliente FROM tbl_cliente;
+
+-- Total de funcionário
+SELECT count(nome) AS totalfunc FROM tbl_funcionario;
+
+-- Total de profissional
+SELECT count(nome) AS totalprofissional FROM tbl_profissional;
+
+
+-- Faturamento de um servico
+delimiter $$
+	CREATE FUNCTION Calcfaturamentoservicos(precoUnitario DECIMAL(10, 2), quantidade INT)
+	RETURNS DECIMAL(10, 2) DETERMINISTIC
+BEGIN
+	RETURN precoUnitario * quantidade;
+END $$
+delimiter ;
+
+SELECT Calcfaturamentoservicos (100, 10);
+
+-- Faturamento mensal de uma venda
+DELIMITER $$
+	CREATE FUNCTION calcfaturamentomensal(precoUnitario DECIMAL(10, 2), quantidade INT, dias INT)
+    RETURNS DECIMAL(10, 2) DETERMINISTIC
+BEGIN
+	RETURN ((precoUnitario * quantidade) * dias);
+END $$
+DELIMITER ;
+SELECT calcfaturamentomensal(30, 14, 30);
+
+-- REMOVER CLIENTE
+DELIMITER $$
+CREATE PROCEDURE remover_clientes(IN p_cpf VARCHAR(11))
+BEGIN
+	DELETE FROM tbl_cliente
+    WHERE cpf = p_cpf;
+END $$
+
+DELIMITER ;
+
+CALL remover_clientes('12345678901');
+
+-- ADICIONAR CLIENTE
+DELIMITER $$
+CREATE PROCEDURE adicionarcliente(p_cpf VARCHAR(11), p_nome VARCHAR(44), p_email VARCHAR(255))
+BEGIN 
+	INSERT INTO tbl_cliente(cpf, nome, email)
+	VALUES(p_cpf, p_nome, p_email);
+END $$
+DELIMITER ;
+
+CALL adicionarcliente('71274214701', 'heytorlindo', 'heytorlindo@ghotmail.com');
+
+
+
