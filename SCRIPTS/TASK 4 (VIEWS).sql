@@ -85,9 +85,17 @@ SELECT
 FROM 
     salaosenac.tbl_registroServico;
 
--- 13 Folha Salarial Profissional (Comissão, INSS, IRRF) (RODAR FUNÇÃO 1 e 2) 
+-- 13 Folha Salarial (Salario + Comissão, INSS, IRRF e VT) (RODAR FUNÇÃO 1, 2 e 7) 
 CREATE VIEW folhasalarial_profissional AS
 SELECT 
 	CONCAT('R$', FORMAT(salario, 2, 'de_DE')) 'Salário Bruto', CONCAT('+ ', 'R$ ', 
-	FORMAT(comissao, 2, 'de_DE'))  'Comissão', CONCAT('-','R$ ', FORMAT(INSS(salario), 2, 'de_DE')) 'INSS', CONCAT('-', 'R$ ', FORMAT(irrf(salario), 2, 'de_DE')) 'IRRF'
-FROM tbl_profissional;
+	FORMAT(comissao, 2, 'de_DE'))  'Comissão', CONCAT('-','R$ ', FORMAT(INSS(salario), 2, 'de_DE')) 'INSS', CONCAT('-', 'R$ ', 
+    FORMAT(vt(salario), 2, 'de_DE')) 'Vale Transporte', CONCAT('-', 'R$ ', FORMAT(irrf(salario), 2, 'de_DE')) 'IRRF'
+FROM tbl_funcionario;
+
+-- 14 Folha Salarial Funcionario (Salario, INSS, IRRF e VT) (RODAR FUNÇÃO 1, 2 e 7) 
+CREATE VIEW folhasalarial_funcionario AS
+SELECT 
+	CONCAT('R$', FORMAT(salario, 2, 'de_DE')), CONCAT('-','R$ ', FORMAT(INSS(salario), 2, 'de_DE')) 'INSS', CONCAT('-', 'R$ ', 
+    FORMAT(vt(salario), 2, 'de_DE')) 'Vale Transporte', CONCAT('-', 'R$ ', FORMAT(irrf(salario), 2, 'de_DE')) 'IRRF'
+FROM tbl_funcionario;
