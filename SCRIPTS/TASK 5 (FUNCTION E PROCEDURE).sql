@@ -96,7 +96,7 @@ SELECT count(nome) AS totalfunc FROM tbl_funcionario;
 SELECT count(nome) AS totalprofissional FROM tbl_profissional;
 
 
--- Faturamento de um servico
+-- 5: Faturamento de um servico
 delimiter $$
 	CREATE FUNCTION Calcfaturamentoservicos(precoUnitario DECIMAL(10, 2), quantidade INT)
 	RETURNS DECIMAL(10, 2) DETERMINISTIC
@@ -107,7 +107,7 @@ delimiter ;
 
 SELECT Calcfaturamentoservicos (100, 10);
 
--- Faturamento mensal de uma venda
+-- 6: Faturamento mensal de uma venda
 DELIMITER $$
 	CREATE FUNCTION calcfaturamentomensal(precoUnitario DECIMAL(10, 2), quantidade INT, dias INT)
     RETURNS DECIMAL(10, 2) DETERMINISTIC
@@ -116,6 +116,23 @@ BEGIN
 END $$
 DELIMITER ;
 SELECT calcfaturamentomensal(30, 14, 30);
+
+-- 7: Calcular vale transporte
+DELIMITER $$
+
+CREATE FUNCTION VT (salario DECIMAL(6, 2))
+RETURNS DECIMAL(6, 2) DETERMINISTIC
+BEGIN
+    DECLARE vale_transporte DECIMAL(6, 2);
+    
+    -- O desconto máximo do vale-transporte é 6% do salário bruto
+    SET vale_transporte = salario * 0.06;
+    
+    -- Retorna o valor do desconto
+    RETURN vale_transporte;
+END $$
+
+DELIMITER ;
 
 -- REMOVER CLIENTE
 DELIMITER $$
@@ -136,9 +153,38 @@ BEGIN
 	INSERT INTO tbl_cliente(cpf, nome, email)
 	VALUES(p_cpf, p_nome, p_email);
 END $$
+
 DELIMITER ;
 
-CALL adicionarcliente('71274214701', 'heytorlindo', 'heytorlindo@ghotmail.com');
-
-
-
+-- REGISTRAR SERVIÇO
+DELIMITER $$
+CREATE PROCEDURE registrarservico(
+    r_idtbl_registroServico INT, 
+    r_nomeCliente VARCHAR(45), 
+    r_valor DECIMAL(6,2), 
+    r_status VARCHAR(45), 
+    r_data DATETIME, 
+    r_tbl_funcionario_cpf VARCHAR(11), 
+    r_formapag VARCHAR(45)
+)
+BEGIN 
+    INSERT INTO tbl_registroservico (
+        idtbl_registroServico, 
+        nomeCliente, 
+        valor, 
+        status, 
+        data, 
+        tbl_funcionario_cpf, 
+        formapag
+    )
+    VALUES (
+        r_idtbl_registroServico, 
+        r_nomeCliente, 
+        r_valor, 
+        r_status, 
+        r_data, 
+        r_tbl_funcionario_cpf, 
+        r_formapag
+    );
+END $$
+DELIMITER ;
