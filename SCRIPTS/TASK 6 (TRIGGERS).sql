@@ -13,7 +13,7 @@ END;
 -- Ativador da Trigger 
 -- UPDATE tbl_itensServicos
 -- SET quantidade = quantidade + 2 -- Aumenta a quantidade em 2
--- WHERE tbl_agendamento_idtbl_agendamento = 1 AND tbl_servico_idtbl_servico = 1; -- Substitua pelos IDs correspondentes
+-- WHERE tbl_agendamento_idtbl_agendamento = 1 AND tbl_servico_idtbl_servico = 1; 
 DELIMITER ;
 
 DELIMITER //
